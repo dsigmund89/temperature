@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Temp Converter</title>
+		<style type = "text/css">
+			.text	{ font-family:arial, sans-serif; }
+		</style>
+	</head>
+	<body>
+		<script type = "text/javascript">
+	
+			
+			var fahnum = 0;
+			var celnum = 0;
+			
+			// Cache three images
+			var warm = new Image();
+			warm.src = "warm.gif";
+			var cool = new Image();
+			cool.src = "cool.gif";
+			var cold = new Image();
+			cold.src = "cold.gif";
+
+			function celKeyDown()
+			{
+				var fah = document.getElementById("fah");
+				fah.value = '';
+			}
+			function fahKeyDown()
+			{
+				var cel = document.getElementById("cel");
+				cel.value = '';
+			}
+
+			function start()
+			{
+				var cel = document.getElementById("cel");
+				cel.addEventListener("keydown", celKeyDown, false);
+				var fah = document.getElementById("fah");
+				fah.addEventListener("keydown", fahKeyDown, false);
+			}
+
+			function convert()
+			{
+				if(cel.value != '')
+				{
+					celnum = parseInt(cel.value);
+					fahnum= ((celnum * (9/5)) + 32);
+					
+					if(fahnum > 50)
+					{
+						var img = document.getElementById("temp");
+						img.src = warm.src;
+					}
+					else if(fahnum <=50 && fahnum >=32)
+					{
+						var img = document.getElementById("temp");
+						img.src = cool.src;
+					}
+					else
+					{
+						var img = document.getElementById("temp");
+						img.src = cold.src;
+					}
+					fah.value = fahnum;
+					cel.value = '';
+				}
+				else
+				{
+					fahnum = parseInt(fah.value);
+					celnum = ((fahnum - 32) * (5/9));
+					
+					if(celnum > 10)
+					{
+						var img = document.getElementById("temp");
+						img.src = warm.src;
+					}
+					else if(celnum <=10 && celnum >=0)
+					{
+						var img = document.getElementById("temp");
+						img.src = cool.src;
+					}
+					else
+					{
+						var img = document.getElementById("temp");
+						img.src = cold.src;
+					}
+					cel.value = celnum;
+					fah.value = '';
+				}
+
+				}
+			addEventListener("load", start, false);
+		</script>
+
+	
+			<h1 class = "text">TEMPERATURE CALCULATOR</h1>
+			<img src="warm.gif" alt="temperature" id="temp">
+			<p class = "text"><i>Please enter a number in either the Celsius or Fahrenheit box.</i></p>
+
+			<form>
+				Celsius &nbsp &nbsp&nbsp : <input type="text" id="cel"><br>
+				Fahrenheit : <input type="text" id="fah"><br>
+				
+				<p class = "text">Warm = Above 50F or 10C<br>
+				   Cool = 32 - 50F or 0 - 10C<br>
+				   Cold = Below 32F or 0C</p>
+				   
+				<input type="button" button onclick = "convert()" value="Convert">  
+			</form>
+	</body>		
+</html>	
